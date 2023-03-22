@@ -2,6 +2,8 @@ const { response } = require("express");
 const express = require("express");
 const app = express();
 app.use(express.json());
+const cors = require("cors");
+app.use(cors());
 const morgan = require("morgan");
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms :body")
@@ -60,6 +62,7 @@ app.delete("/api/persons/:id", (request, response) => {
 morgan.token("body", (req) => JSON.stringify(req.body));
 app.post("/api/persons", (request, response) => {
   const body = request.body;
+  console.log(body);
   const nameExists = persons.find((p) => p.name === body.name);
 
   if ((nameExists && !body.number) || (nameExists && body.number)) {
